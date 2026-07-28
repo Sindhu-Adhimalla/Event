@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
+
+        .container {
+            width: 350px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: darkgreen;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Registration Form</h2>
+
+    <form id="regForm">
+        <input type="text" id="name" placeholder="Enter Name">
+        <div class="error" id="nameError"></div>
+
+        <input type="email" id="email" placeholder="Enter Email">
+        <div class="error" id="emailError"></div>
+
+        <input type="text" id="phone" placeholder="Enter Phone Number">
+        <div class="error" id="phoneError"></div>
+
+        <input type="password" id="password" placeholder="Enter Password">
+        <div class="error" id="passwordError"></div>
+
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+        <div class="error" id="confirmError"></div>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <div class="success" id="successMessage"></div>
+</div>
+
+<script>
+document.getElementById("regForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Clear previous errors
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("phoneError").innerHTML = "";
+    document.getElementById("passwordError").innerHTML = "";
+    document.getElementById("confirmError").innerHTML = "";
+    document.getElementById("successMessage").innerHTML = "";
+
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+
+    let isValid = true;
+
+    // Name Validation
+    if (name === "") {
+        document.getElementById("nameError").innerHTML = "Name is required";
+        isValid = false;
+    }
+
+    // Email Validation
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (!emailPattern.test(email)) {
+        document.getElementById("emailError").innerHTML = "Enter a valid email";
+        isValid = false;
+    }
+
+    // Phone Validation
+    let phonePattern = /^[0-9]{10}$/;
+    if (!phonePattern.test(phone)) {
+        document.getElementById("phoneError").innerHTML = "Phone must be 10 digits";
+        isValid = false;
+    }
+
+    // Password Validation
+    if (password.length < 6) {
+        document.getElementById("passwordError").innerHTML =
+            "Password must be at least 6 characters";
+        isValid = false;
+    }
+
+    // Confirm Password
+    if (password !== confirmPassword) {
+        document.getElementById("confirmError").innerHTML =
+            "Passwords do not match";
+        isValid = false;
+    }
+
+    if (isValid) {
+        document.getElementById("successMessage").innerHTML =
+            "Registration Successful!";
+        document.getElementById("regForm").reset();
+    }
+});
+</script>
+
+</body>
+</html>
